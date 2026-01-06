@@ -35,10 +35,9 @@
 
 ### ¿Qué incluye?
 
-- **3 Versiones de texto bíblico:**
+- **2 Versiones de texto bíblico:**
   - Biblia Católica (Torres Amat) - 73 libros
   - Biblia Protestante (Reina Valera 1909) - 66 libros
-  - Libro de Mormón - 15 libros
 
 - **Lectura guiada diaria** basada en el calendario anual.
 - **Asistente de IA** (Lex Divina) para consultar dudas teológicas.
@@ -87,7 +86,7 @@ Al abrir la aplicación, verás la interfaz dividida en dos áreas principales:
 ### Barra Lateral (Menú)
 
 - **Logo Verbum Atlas** - Identidad visual de la app.
-- **Selector de Versión** - Cambia entre Católica, Protestante o Libro de Mormón.
+- **Selector de Versión** - Cambia entre Católica y Protestante.
 - **Botones de Navegación** - Acceso rápido a cada módulo.
 - **Buscador de Libros** - Filtra libros por nombre.
 - **Créditos** - Información del desarrollador.
@@ -96,13 +95,12 @@ Al abrir la aplicación, verás la interfaz dividida en dos áreas principales:
 
 ## Selector de Versión Bíblica
 
-Ubicado en la parte superior de la barra lateral, este menú desplegable te permite cambiar entre las tres versiones de texto disponibles:
+Ubicado en la parte superior de la barra lateral, este menú desplegable te permite cambiar entre las dos versiones de texto disponibles:
 
 | Opción | Descripción |
 |--------|-------------|
 | **Católica (73 Libros)** | Biblia Torres Amat con libros deutercanónicos (Tobías, Judit, Sabiduría, Eclesiástico, Baruc, 1 y 2 Macabeos). |
 | **Reina Valera (66 Libros)** | Traducción protestante clásica de 1909. |
-| **Libro de Mormón (15 Libros)** | Texto sagrado adicional para miembros de La Iglesia de Jesucristo de los Santos de los Últimos Días. |
 
 > 💡 **Tip:** Al cambiar de versión, la biblioteca se actualiza automáticamente mostrando solo los libros correspondientes.
 
@@ -146,7 +144,6 @@ La **Biblioteca Sagrada** es el corazón de Verbum Atlas. Aquí encontrarás tod
    - `Todos` - Muestra todos los libros.
    - `A.T.` - Solo Antiguo Testamento.
    - `N.T.` - Solo Nuevo Testamento.
-   - `L.M.` - Solo Libro de Mormón (si está seleccionada esa versión).
 
 3. **Buscador:** Escribe parte del nombre de un libro para filtrarlo.
 
@@ -340,9 +337,9 @@ Actualmente, Verbum Atlas está diseñado exclusivamente para **Windows**. Futur
 
 Sí. Todos tus datos se almacenan **localmente** en tu computadora. No se envía información personal a ningún servidor, excepto las preguntas que hagas a Lex Divina (que van directamente a Google Gemini).
 
-### ¿Por qué no veo el Libro de Mormón en la biblioteca?
+### ¿Hay más versiones bíblicas disponibles?
 
-Asegúrate de seleccionar **"Libro de Mormón (15 Libros)"** en el selector de versión ubicado en la barra lateral.
+Actualmente Verbum Atlas incluye la Biblia Católica (73 libros) y la Reina Valera 1909 (66 libros). Futuras versiones podrían incluir traducciones adicionales.
 
 ### ¿Cómo reseteo mi progreso?
 
@@ -363,7 +360,6 @@ C:\Users\[TuUsuario]\AppData\Roaming\VerbumAtlas2026\user_history.db
 ### Recursos Utilizados
 
 - **Textos Bíblicos:** Dominio público (Torres Amat, Reina Valera 1909).
-- **Libro de Mormón:** Texto oficial en español.
 - **Motor de IA:** Google Gemini.
 - **Iconos:** Font Awesome.
 - **Tipografías:** Outfit, Playfair Display (Google Fonts).
