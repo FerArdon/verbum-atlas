@@ -19,7 +19,6 @@
 ### 📚 **Biblioteca Bíblica Completa**
 - **Reina-Valera 1909** - Texto clásico del protestantismo
 - **Biblia Católica Latinoamericana** - Incluye libros deuterocanónicos
-- **Libro de Mormón** - Texto completo con navegación por capítulos
 
 ### 🤖 **Lex Divina - Asistente con IA**
 - Chat interactivo con inteligencia artificial (Google Gemini)
@@ -113,7 +112,6 @@ Mapa Biblia/
 │   └── data.js          # Datos de la Biblia
 ├── biblia.db            # Base de datos Reina-Valera
 ├── biblia_catolica.db   # Base de datos Católica
-├── libro_mormon.db      # Base de datos Libro de Mormón
 ├── daily_readings.json  # Lecturas diarias
 └── cross_references.json # Referencias cruzadas
 ```
