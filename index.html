@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbum Atlas 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="qwebchannel.js"></script>
+
+    <!-- Cargar datos bíblicos -->
+    <script src="js/data.js"></script>
+    <script src="js/mormon_data_append.js"></script>
+    <script src="js/cross_references_data.js"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Navegación Lateral -->
+        <aside class="sidebar">
+            <div class="logo"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 25px;">
+                <img src="app_icon.png" alt="Verbum Atlas Logo"
+                    style="width: 90px; height: 90px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));">
+                <h1
+                    style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0; background: linear-gradient(45deg, #B45309, #D97706, #F59E0B, #B45309); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 3s linear infinite;">
+                    Verbum<span>Atlas</span></h1>
+            </div>
+
+            <div class="version-selector"
+                style="margin-bottom: 2rem; background: #EFF6FF; padding: 10px; border-radius: 12px; border: 1px solid #DBEAFE;">
+                <label
+                    style="font-size: 0.7rem; color: #2563EB; font-weight: bold; display: block; margin-bottom: 5px; text-transform:uppercase;">Versión</label>
+                <select id="bibleVersion"
+                    style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; font-family: 'Outfit';">
+                    <option value="catholic" selected>Católica (73 Libros)</option>
+                    <option value="protestant">Reina Valera (66 Libros)</option>
+                    <option value="mormon">Libro de Mormón (15 Libros)</option>
+                </select>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn" data-target="dailyPlan"><span class="icon">📅</span> Plan Diario</button>
+                <button class="nav-btn active" data-target="dashboard"><span class="icon">📚</span> Biblioteca</button>
+                <button class="nav-btn" data-target="panorama"><span class="icon">🌍</span> Panorama</button>
+                <button class="nav-btn" data-target="lexDivina"><span class="icon">✨</span> Lex Divina</button>
+                <button class="nav-btn" data-target="myJournal"><span class="icon">🧘</span> Mi Diario</button>
+                <button class="nav-btn" data-target="freeNotes"><span class="icon">📝</span> Mis Apuntes</button>
+                <button class="nav-btn" data-target="studyPlan"><span class="icon">📈</span> Mi Progreso</button>
+            </nav>
+
+            <div class="search-box">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="searchBook" placeholder="Buscar libro...">
+            </div>
+
+            <div
+                style="margin-top:auto; font-size:0.6rem; color:#999; text-align:center; line-height:1.4; padding-top:20px; border-top:1px solid #eee;">
+                <strong>Verbum Atlas 2026</strong><br>
+                Enero 2026<br>
+                Créditos: Fernando Ardón, Antigravity<br>
+                Img: Gemini • nano banana
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <!-- VISTA: BIBLIOTECA -->
+            <section id="dashboard" class="view active-view">
+                <header class="top-header">
+                    <div>
+                        <h2>Biblioteca Sagrada</h2>
+                        <p>Los libros de la ley, la historia y la profecía.</p>
+                    </div>
+
+                    <div class="search-container"
+                        style="margin-left: auto; margin-right: 1.5rem; position: relative; z-index: 100;">
+                        <i class="fa-solid fa-magnifying-glass"
+                            style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b; pointer-events: none;"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar libro..."
+                            style="padding: 10px 12px 10px 40px; border-radius: 20px; border: 1px solid #cbd5e1; font-family: 'Outfit'; width: 250px; outline: none; transition: all 0.2s; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    </div>
+
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">Todos</button>
+                        <button class="filter-btn" data-filter="old">A.T.</button>
+                        <button class="filter-btn" data-filter="new">N.T.</button>
+                        <button class="filter-btn" data-filter="mormon">L.M.</button>
+                    </div>
+                </header>
+                <div class="books-grid" id="booksGrid"></div>
+            </section>
+
+
+            <!-- VISTA: PANORAMA -->
+            <section id="panorama" class="view" style="padding: 2rem;">
+                <header style="margin-bottom: 2rem;">
+                    <h1 style="font-family:'Playfair Display'; font-size: 2.5rem; color: var(--primary);">Panorama de la
+                        Biblia</h1>
+                    <p style="color: #666;">Entiende la estructura y el plan de Dios a través de la historia.</p>
+                </header>
+
+                <div class="panorama-tabs"
+                    style="display:flex; gap:1rem; margin-bottom:2rem; border-bottom:1px solid #ddd; padding-bottom:1rem;">
+                    <button class="tab-btn active" onclick="showPanoramaTab('structure')"><i
+                            class="fa-solid fa-table-cells"></i> Tabla Periódica</button>
+                    <button class="tab-btn" onclick="showPanoramaTab('timeline')"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Cronología</button>
+                </div>
+
+                <!-- TAB: ESTRUCTURA -->
+                <div id="tab-structure" class="panorama-content">
+                    <div
+                        style="background:#F0F9FF; padding:1.5rem; border-radius:12px; margin-bottom:2rem; border-left:5px solid #0EA5E9;">
+                        <h3 style="margin:0 0 10px 0; color:#0369A1">Estructura Literaria</h3>
+                        <p>La Biblia no está ordenada cronológicamente, sino por géneros literarios. Esta "Tabla
+                            Periódica" te ayuda a visualizar las agrupaciones.</p>
+                    </div>
+                    <div id="periodicTable" style="display:flex; flex-wrap:wrap; gap:20px;">
+                        <!-- Inyectado por JS -->
+                    </div>
+                </div>
+
+                <!-- TAB: CRONOLOGÍA -->
+                <div id="tab-timeline" class="panorama-content" style="display:none;">
+                    <div
+                        style="background:#FFF7ED; padding:1.5rem; border-radius:12px; margin-bottom:2rem; border-left:5px solid #F97316;">
+                        <h3 style="margin:0 0 10px 0; color:#C2410C">El Plan a través del Tiempo</h3>
+                        <p>Desde la Creación hasta la Nueva Jerusalén, descubre cómo se conectan los grandes eventos de
+                            la historia de la salvación.</p>
+                    </div>
+                    <div class="timeline-visual"
+                        style="border-left: 3px solid #ddd; margin-left: 20px; padding-left: 30px;">
+                        <!-- Eventos estáticos -->
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#10B981"></div>
+                            <h4>La Creación y Caída</h4>
+                            <p>El inicio de todo y la entrada del pecado (Génesis 1-3).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#10B981"></div>
+                            <h4>Los Patriarcas</h4>
+                            <p>Dios llama a Abraham para formar un pueblo (Génesis 12-50).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#F59E0B"></div>
+                            <h4>El Éxodo y la Ley</h4>
+                            <p>Liberación de Egipto y Pacto en el Sinaí (Éxodo - Deuteronomio).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#F59E0B"></div>
+                            <h4>Conquista y Jueces</h4>
+                            <p>Entrada a la Tierra Prometida y ciclos de apostasía (Josué - Jueces).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#8B5CF6"></div>
+                            <h4>Reino Unido</h4>
+                            <p>Saúl, David y Salomón. Construcción del Templo (Sanuel - Crónicas).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#EF4444"></div>
+                            <h4>Reino Dividido y Profetas</h4>
+                            <p>Israel (Norte) y Judá (Sur). Advertencias de los profetas.</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#374151"></div>
+                            <h4>Exilio y Retorno</h4>
+                            <p>Cautiverio en Babilonia y reconstrucción de Jerusalén (Esdras, Nehemías).</p>
+                        </div>
+                        <div class="timeline-event"
+                            style="margin-top:20px; border-top:2px dashed #ccc; padding-top:20px">
+                            <div class="t-dot" style="background:#DB2777"></div>
+                            <h4>Vida de Jesús</h4>
+                            <p>Encarnación, Ministerio, Muerte y Resurrección (Evangelios).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#3B82F6"></div>
+                            <h4>La Iglesia Primitiva</h4>
+                            <p>Venida del Espíritu Santo y expansión del Evangelio (Hechos, Cartas).</p>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="t-dot" style="background:#3B82F6"></div>
+                            <h4>Consumación</h4>
+                            <p>Cielos nuevos y Tierra nueva (Apocalipsis).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- VISTA: MI PROGRESO -->
+            <section id="studyPlan" class="view" style="padding: 2rem;">
+                <header style="margin-bottom: 2rem;">
+                    <h1 style="font-family:'Playfair Display'; font-size: 2.5rem; color: var(--primary);">Mi Progreso
+                    </h1>
+                    <p style="color: #666;">Seguimiento anual de lectura.</p>
+                </header>
+                <div class="stats-container"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 3rem;">
+                    <div class="stat-card">
+                        <h3 style="margin:0; color:#444">Total</h3>
+                        <h2 id="totalProgress" style="font-size: 2.5rem; margin: 5px 0; color:var(--primary);">0%</h2>
+                        <div class="progress-bar">
+                            <div id="totalProgressBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="margin:0; color:#444">A.T.</h3>
+                        <h2 id="otProgress" style="font-size: 2rem; margin: 5px 0; color:#F59E0B;">0%</h2>
+                        <div class="progress-bar">
+                            <div id="otProgressBar" style="width:0%; background:#F59E0B"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="margin:0; color:#444">N.T.</h3>
+                        <h2 id="ntProgress" style="font-size: 2rem; margin: 5px 0; color:#EC4899;">0%</h2>
+                        <div class="progress-bar">
+                            <div id="ntProgressBar" style="width:0%; background:#EC4899"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="margin:0; color:#444">Meta Diaria</h3>
+                        <h2 id="dailyGoal"
+                            style="font-size: 1.2rem; margin: 10px 0; min-height: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+                            Cargando...
+                        </h2>
+                    </div>
+                </div>
+                <h3>Continúa tu lectura</h3>
+                <div id="suggestedReadings" style="background: white; padding: 20px; border-radius: 16px;"></div>
+            </section>
+
+
+            <!-- VISTA: PLAN DIARIO -->
+            <section id="dailyPlan" class="view" style="padding: 2rem;">
+                <header
+                    style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h1 id="dailyPlanDate"
+                            style="font-family:'Playfair Display'; font-size: 2.5rem; color: #059669; margin:0;">
+                            Cargando...</h1>
+                        <p style="color: #666; margin: 5px 0 0;">Tu alimento espiritual para hoy.</p>
+                    </div>
+                </header>
+
+                <div id="dailyPlanContainer"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px;">
+                    <!-- Se inyectará por JS: Lecturas del día y área de devocional rápido -->
+                </div>
+            </section>
+            <section id="bookDetailOld" class="view" style="display:none;">
+                <button class="back-btn" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+                <div class="map-container" id="mapContainer"></div>
+
+                <!-- VISOR DE TEXTO -->
+                <div id="verseViewer" class="verse-viewer"
+                    style="display:none; margin-top:2rem; background:white; padding:2rem; border-radius:16px; border-left: 5px solid var(--primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap: wrap; gap: 10px;">
+                        <h3 id="verseViewerTitle" style="font-family:'Playfair Display'; font-size:1.8rem; margin:0;">
+                            Lectura</h3>
+                        <div id="viewerControls" style="display:flex; gap:10px;"></div>
+                    </div>
+
+                    <div id="verseViewerContent"
+                        style="font-size:1.1rem; line-height:1.8; color:#374151; margin-bottom: 2rem;"></div>
+
+                    <!-- NUEVO: DIARIO ESPIRITUAL ESTRUCTURADO -->
+                    <div class="journal-section" style="border-top: 2px dashed #eee; padding-top: 2rem;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem">
+                            <i class="fa-solid fa-feather-pointed" style="font-size:1.5rem; color:var(--primary)"></i>
+                            <h3 style="margin:0; font-family:'Playfair Display'; color:#333">Diario Espiritual</h3>
+                        </div>
+                        <p style="margin-bottom:1.5rem; color:#666; font-size:0.9rem">Vive la palabra de forma práctica
+                            y transformadora.</p>
+
+                        <div class="journal-grid" style="display:grid; grid-template-columns: 1fr; gap:1.5rem;">
+
+                            <!-- Campo 1: Reflexión -->
+                            <div class="journal-field">
+                                <label style="display:block; font-weight:600; color:#4B5563; margin-bottom:5px;">
+                                    <i class="fa-solid fa-lightbulb" style="color:#F59E0B"></i> Reflexión
+                                </label>
+                                <textarea id="jReflexion" class="journal-input"
+                                    placeholder="¿Qué ideas o pensamientos surgen de este texto?"></textarea>
+                            </div>
+
+                            <!-- Campo 2: Aplicación -->
+                            <div class="journal-field">
+                                <label style="display:block; font-weight:600; color:#4B5563; margin-bottom:5px;">
+                                    <i class="fa-solid fa-person-walking" style="color:#10B981"></i> ¿Cómo lo voy a
+                                    aplicar?
+                                </label>
+                                <textarea id="jAplicacion" class="journal-input"
+                                    placeholder="Acciones concretas para mi vida hoy..."></textarea>
+                            </div>
+
+                            <!-- Campo 3: Mensaje de Dios -->
+                            <div class="journal-field">
+                                <label style="display:block; font-weight:600; color:#4B5563; margin-bottom:5px;">
+                                    <i class="fa-solid fa-heart" style="color:#EC4899"></i> ¿Qué quiso decirme Dios?
+                                </label>
+                                <textarea id="jMensaje" class="journal-input"
+                                    placeholder="Lo que siento que Dios me habla al corazón..."></textarea>
+                            </div>
+                        </div>
+
+                        <p id="journalStatus" style="text-align:right; font-size:0.8rem; color:#aaa; margin-top:10px">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Guardado automático
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: MI DIARIO GLOBAL -->
+            <section id="myJournal" class="view" style="padding: 2rem;">
+                <header style="margin-bottom: 2rem; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h1 style="font-family:'Playfair Display'; font-size: 2.5rem; color: var(--primary);">Mi Diario
+                            Espiritual</h1>
+                        <p style="color: #666;">Tus reflexiones y crecimiento en un solo lugar.</p>
+                    </div>
+                    <button onclick="createNewJournalEntry()"
+                        style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                        <i class="fa-solid fa-pen-nib"></i> Nueva Reflexión
+                    </button>
+                </header>
+
+                <div id="journalEntriesList"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                    <!-- Inyectado por JS -->
+                    <div style="text-align:center; grid-column: 1/-1; padding: 40px; color:#999;">
+                        <i class="fa-solid fa-pen-fancy" style="font-size:3rem; margin-bottom:1rem; opacity:0.3"></i>
+                        <p>Aún no tienes entradas. Empieza a leer y escribe tus reflexiones.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: MIS APUNTES (FREE NOTES) -->
+            <section id="freeNotes" class="view" style="padding: 2rem; position:relative; min-height:80vh;">
+                <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+                    <div>
+                        <h1 style="font-family:'Playfair Display'; font-size: 2.5rem; color: #D97706;">Mis Apuntes</h1>
+                        <p style="color: #666;">Espacio libre para recordatorios, versículos y notas rápidas.</p>
+                    </div>
+                    <button onclick="createNewNote()"
+                        style="background:#D97706; color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:bold; box-shadow:0 4px 10px rgba(217, 119, 6, 0.3);">
+                        <i class="fa-solid fa-plus"></i> Nueva Nota
+                    </button>
+                </header>
+
+                <div id="notesBoard"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                    <!-- Notas inyectadas por JS -->
+                    <div id="emptyNotesMsg" style="text-align:center; grid-column: 1/-1; padding: 40px; color:#999;">
+                        <i class="fa-regular fa-note-sticky"
+                            style="font-size:3rem; margin-bottom:1rem; opacity:0.3"></i>
+                        <p>No tienes apuntes. ¡Crea el primero!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: LEX DIVINA (IA) -->
+            <section id="lexDivina" class="view" style="display:none; padding:40px; max-width:800px; margin:0 auto;">
+                <div
+                    style="background:white; border-radius:24px; padding:40px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <h2 style="font-size:2.5rem; color:#1F2937; margin-bottom:10px;">Lex Divina</h2>
+                        <p style="color:#6B7280;">Inteligencia Artificial aplicada al estudio espiritual</p>
+
+                        <!-- Botón API Key -->
+                        <div style="margin-top:15px;">
+                            <button id="toggleApiKeyBtn"
+                                style="padding:8px 16px; border:1px solid #8B5CF6; background:white; border-radius:8px; cursor:pointer; font-size:0.85rem; color:#8B5CF6; transition:all 0.2s;">
+                                ⚙️ Configurar API Key Gemini
+                            </button>
+                            <div id="apiKeyConfig"
+                                style="display:none; margin-top:15px; padding:15px; background:#F9FAFB; border-radius:12px;">
+                                <input type="password" id="geminiInput" placeholder="Pegar API Key aquí..."
+                                    style="width:100%; padding:10px; border:1px solid #E5E7EB; border-radius:6px; box-sizing:border-box; font-size:0.85rem; margin-bottom:10px;">
+                                <button onclick="saveApiKey()"
+                                    style="width:100%; padding:10px; background:#10B981; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600;">
+                                    💾 Guardar API Key
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Container -->
+                    <div id="chatContainer"
+                        style="height:400px; overflow-y:auto; border:1px solid #E5E7EB; border-radius:16px; padding:20px; margin-bottom:20px; background:#F9FAFB;">
+                        <div style="text-align:center; color:#9CA3AF; margin-top:150px;">
+                            <p>Haz una pregunta sobre las escrituras...</p>
+                        </div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div style="position:relative;">
+                        <textarea id="chatInput" placeholder="Ej: ¿Qué enseña Alma sobre la fe?"
+                            style="width:100%; padding:15px 50px 15px 20px; border:2px solid #E5E7EB; border-radius:12px; font-family:inherit; resize:none; outline:none; transition:border-color 0.2s;"></textarea>
+                        <button id="sendChatBtn"
+                            style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:#8B5CF6; color:white; border:none; width:40px; height:40px; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                            ➤
+                        </button>
+                    </div>
+
+                    <div style="margin-top:20px; text-align:right;">
+                        <button id="clearChatBtn"
+                            style="background:none; border:none; color:#EF4444; cursor:pointer; font-size:0.9rem;">🗑️
+                            Borrar chat</button>
+                    </div>
+
+                    <div style="display:none;"> border-radius:12px; font-size:0.9rem; color:#1E40AF;">
+                        <strong>Nota:</strong> Lex Divina utiliza Gemini AI. Asegúrate de configurar tu API Key en el
+                        menú lateral.
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: DETALLE DE LIBRO -->
+            <section id="bookDetail" class="view" style="display:none; padding: 2rem;">
+                <button class="back-btn" onclick="goBackToLibrary()">
+                    <i class="fa-solid fa-arrow-left"></i> Volver a la Biblioteca
+                </button>
+                <div style="margin-bottom: 2rem;">
+                    <h2 id="detailBookName" style="font-size:2.5rem; margin-bottom:5px;">Nombre Libro</h2>
+                    <p id="detailBookInfo" style="color:#6B7280; margin-bottom:30px;">Categoría • Capítulos</p>
+                </div>
+                <div id="chaptersGrid"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px;">
+                </div>
+            </section>
+
+            <!-- VISTA: LECTOR DE CAPÍTULOS -->
+            <section id="readerContainer" class="view" style="display:none; padding: 2rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <button class="back-btn" onclick="goBackToChapters()">
+                        <i class="fa-solid fa-arrow-left"></i> Volver
+                    </button>
+                    <h2 id="readerTitle" style="margin:0;">Lectura</h2>
+                    <div></div>
+                </div>
+                <div id="verseContent"
+                    style="background:white; padding:40px; border-radius:16px; line-height:1.8; font-size:1.1rem; max-width:800px; margin:0 auto; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
+                    Cargando...
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <style>
+        /* Estilos específicos para la Tab de Cronología */
+        .timeline-event {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .t-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            left: -39px;
+            top: 0;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px #ddd;
+        }
+
+        .timeline-event h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+
+        .timeline-event p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            font-weight: 600;
+            color: #666;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #EFF6FF;
+            color: var(--primary);
+        }
+
+        .tab-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .journal-input {
+            width: 100%;
+            height: 80px;
+            padding: 12px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: 'Outfit';
+            font-size: 0.95rem;
+            background: #F9FAFB;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .journal-input:focus {
+            background: #fff;
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-bar div {
+            height: 100%;
+            background: var(--primary);
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+    </style>
+
+    <script src="js/app.js"></script>
+    <script src="js/features.js"></script>
+    <script>
+        // Script simple para tabs dentro de Panorama
+        function showPanoramaTab(tabName) {
+            document.querySelectorAll('.panorama-content').forEach(el => el.style.display = 'none');
+            document.getElementById('tab-' + tabName).style.display = 'block';
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('button').classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

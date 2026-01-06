@@ -1,0 +1,258 @@
+{
+    "Génesis.1.1": [
+        "Juan.1.1",
+        "Juan.1.3",
+        "Colosenses.1.16",
+        "Hebreos.1.10",
+        "Hebreos.11.3"
+    ],
+    "Génesis.1.26": [
+        "Génesis.5.1",
+        "Génesis.9.6",
+        "1 Corintios.11.7",
+        "Efesios.4.24",
+        "Colosenses.3.10",
+        "Santiago.3.9"
+    ],
+    "Génesis.1.27": [
+        "Mateo.19.4",
+        "Marcos.10.6"
+    ],
+    "Génesis.2.24": [
+        "Mateo.19.5",
+        "Marcos.10.7",
+        "1 Corintios.6.16",
+        "Efesios.5.31"
+    ],
+    "Génesis.3.15": [
+        "Romanos.16.20",
+        "Gálatas.4.4",
+        "Apocalipsis.12.9",
+        "Apocalipsis.12.17"
+    ],
+    "Génesis.12.3": [
+        "Génesis.18.18",
+        "Génesis.22.18",
+        "Hechos.3.25",
+        "Gálatas.3.8"
+    ],
+    "Génesis.15.6": [
+        "Romanos.4.3",
+        "Romanos.4.9",
+        "Romanos.4.22",
+        "Gálatas.3.6",
+        "Santiago.2.23"
+    ],
+    "Éxodo.3.14": [
+        "Juan.8.58",
+        "Apocalipsis.1.4",
+        "Apocalipsis.1.8"
+    ],
+    "Éxodo.20.12": [
+        "Mateo.15.4",
+        "Mateo.19.19",
+        "Marcos.7.10",
+        "Marcos.10.19",
+        "Lucas.18.20",
+        "Efesios.6.2"
+    ],
+    "Éxodo.20.13": [
+        "Mateo.5.21",
+        "Mateo.19.18",
+        "Marcos.10.19",
+        "Lucas.18.20",
+        "Romanos.13.9",
+        "Santiago.2.11"
+    ],
+    "Éxodo.20.14": [
+        "Mateo.5.27",
+        "Mateo.19.18",
+        "Marcos.10.19",
+        "Lucas.18.20",
+        "Romanos.13.9",
+        "Santiago.2.11"
+    ],
+    "Levítico.19.18": [
+        "Mateo.5.43",
+        "Mateo.19.19",
+        "Mateo.22.39",
+        "Marcos.12.31",
+        "Lucas.10.27",
+        "Romanos.13.9",
+        "Gálatas.5.14",
+        "Santiago.2.8"
+    ],
+    "Deuteronomio.6.4": [
+        "Marcos.12.29",
+        "1 Corintios.8.4",
+        "1 Corintios.8.6"
+    ],
+    "Deuteronomio.6.5": [
+        "Mateo.22.37",
+        "Marcos.12.30",
+        "Lucas.10.27"
+    ],
+    "Salmos.2.7": [
+        "Mateo.3.17",
+        "Marcos.1.11",
+        "Lucas.3.22",
+        "Hechos.13.33",
+        "Hebreos.1.5",
+        "Hebreos.5.5"
+    ],
+    "Salmos.22.1": [
+        "Mateo.27.46",
+        "Marcos.15.34"
+    ],
+    "Salmos.110.1": [
+        "Mateo.22.44",
+        "Mateo.26.64",
+        "Marcos.12.36",
+        "Marcos.14.62",
+        "Lucas.20.42",
+        "Lucas.22.69",
+        "Hechos.2.34",
+        "Hebreos.1.13"
+    ],
+    "Isaías.6.9": [
+        "Mateo.13.14",
+        "Marcos.4.12",
+        "Lucas.8.10",
+        "Juan.12.40",
+        "Hechos.28.26"
+    ],
+    "Isaías.7.14": [
+        "Mateo.1.23"
+    ],
+    "Isaías.40.3": [
+        "Mateo.3.3",
+        "Marcos.1.3",
+        "Lucas.3.4",
+        "Juan.1.23"
+    ],
+    "Isaías.53.4": [
+        "Mateo.8.17"
+    ],
+    "Isaías.53.7": [
+        "Hechos.8.32"
+    ],
+    "Isaías.61.1": [
+        "Lucas.4.18"
+    ],
+    "Jeremías.31.31": [
+        "Hebreos.8.8"
+    ],
+    "Malaquías.3.1": [
+        "Mateo.11.10",
+        "Marcos.1.2",
+        "Lucas.7.27"
+    ],
+    "Mateo.3.16": [
+        "Juan.1.32"
+    ],
+    "Mateo.5.3": [
+        "Lucas.6.20"
+    ],
+    "Mateo.5.17": [
+        "Romanos.3.31",
+        "Romanos.10.4"
+    ],
+    "Mateo.6.9": [
+        "Lucas.11.2"
+    ],
+    "Mateo.11.28": [
+        "Juan.6.37"
+    ],
+    "Mateo.16.18": [
+        "Efesios.2.20",
+        "1 Pedro.2.4"
+    ],
+    "Mateo.22.37": [
+        "Marcos.12.30",
+        "Lucas.10.27"
+    ],
+    "Mateo.26.26": [
+        "Marcos.14.22",
+        "Lucas.22.19",
+        "1 Corintios.11.24"
+    ],
+    "Mateo.28.19": [
+        "Marcos.16.15",
+        "Hechos.1.8"
+    ],
+    "Juan.1.1": [
+        "Génesis.1.1",
+        "1 Juan.1.1",
+        "Apocalipsis.19.13"
+    ],
+    "Juan.1.14": [
+        "1 Juan.1.1",
+        "1 Juan.4.2"
+    ],
+    "Juan.3.3": [
+        "1 Pedro.1.23"
+    ],
+    "Juan.3.16": [
+        "Romanos.5.8",
+        "1 Juan.4.9"
+    ],
+    "Juan.14.6": [
+        "Hechos.4.12",
+        "1 Timoteo.2.5"
+    ],
+    "Hechos.2.38": [
+        "Hechos.22.16",
+        "1 Pedro.3.21"
+    ],
+    "Romanos.3.23": [
+        "Romanos.5.12"
+    ],
+    "Romanos.5.8": [
+        "Juan.3.16",
+        "1 Juan.4.9"
+    ],
+    "Romanos.6.23": [
+        "Santiago.1.15"
+    ],
+    "Romanos.8.28": [
+        "Génesis.50.20"
+    ],
+    "Romanos.10.9": [
+        "1 Corintios.12.3",
+        "Filipenses.2.11"
+    ],
+    "1 Corintios.15.3": [
+        "1 Pedro.3.18"
+    ],
+    "Efesios.2.8": [
+        "Romanos.3.24",
+        "Romanos.3.28",
+        "Tito.3.5"
+    ],
+    "Filipenses.4.13": [
+        "2 Corintios.12.9"
+    ],
+    "2 Timoteo.3.16": [
+        "2 Pedro.1.21"
+    ],
+    "Hebreos.11.1": [
+        "2 Corintios.5.7"
+    ],
+    "Santiago.2.17": [
+        "Santiago.2.26"
+    ],
+    "1 Pedro.2.24": [
+        "Isaías.53.5"
+    ],
+    "1 Juan.1.9": [
+        "Salmos.32.5",
+        "Proverbios.28.13"
+    ],
+    "1 Juan.4.8": [
+        "1 Juan.4.16"
+    ],
+    "Apocalipsis.1.8": [
+        "Apocalipsis.21.6",
+        "Apocalipsis.22.13"
+    ]
+}

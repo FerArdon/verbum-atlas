@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.spec
+
+# Large executables and build artifacts (exceed GitHub 100MB limit)
+*.exe
+*.pkg
+Mapa Biblia/build_lex/
+Mapa Biblia/build_temp/
+Mapa Biblia/dist_final/
+Mapa Biblia/dist_lex/
+
+# Book of Mormon content - Copyright Intellectual Reserve, Inc.
+# Removed from public repo due to potential copyright issues
+libro_mormon*.db
+book_of_mormon*.pdf
+Mapa Biblia/libro_mormon.db
+Mapa Biblia/book_of_mormon*.pdf
+mormon_data.js
+Mapa Biblia/mormon_data.js
+
+# IDE
+.vscode/
+.idea/
+
+# Databases (pueden ser regeneradas o son muy pesadas)
+# Descomentar si no quieres subir las bases de datos
+# *.db
+
+# Archivos temporales y de debug
+pdf_dump*.txt
+debug_*.py
+inspect_*.py
+check_*.py
+verify_*.py
+diagnostico_*.py
+fix_*.py
+test_*.py
+
+# Archivos de configuración local
+*.log
+
+# Archivos grandes de PDF fuente (opcional)
+# *.pdf
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Archivos de sistema
+Thumbs.db
+.DS_Store
+
+# Carpeta de imágenes del manual (generadas)
+manual_images/
+images/

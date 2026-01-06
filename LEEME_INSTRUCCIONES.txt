@@ -1,0 +1,28 @@
+================================================================
+VERBUM ATLAS v3.2 - MORMÓN & LEX DIVINA EDITION (Final)
+================================================================
+
+¡Aplicación lista y compilada!
+
+CARACTERÍSTICAS INCLUIDAS:
+1. Libro de Mormón (Texto extraído del PDF 2013).
+   - Mayoría de libros completos. Rellenados también los pequeños (Enós, Jarom, etc.).
+2. Lex Divina (IA Chat): Restaurada y operativa.
+   - Requiere configurar tu API Key de Gemini en el menú lateral para funcionar.
+3. Referencias Cruzadas funcionales.
+4. Biblia Católica y Protestante completas.
+
+UBICACIÓN DEL EJECUTABLE:
+Carpeta: Escritorio\Mapa Biblia\dist_lex\Verbum Atlas 2026\
+Archivo: Verbum Atlas 2026.exe
+
+IMPORTANTE:
+- La carpeta '_internal' dentro de 'dist_lex\Verbum Atlas 2026' contiene todos los archivos del sistema.
+- Puedes mover la carpeta 'Verbum Atlas 2026' completa a donde quieras, pero NO saques el .exe de ella.
+- Si quieres un acceso directo en el escritorio, clic derecho al .exe -> Enviar a -> Escritorio (crear acceso directo).
+
+Para completar libros faltantes (si los hay):
+- Editar 'libro_mormon.db' con DB Browser for SQLite.
+
+¡Muchas bendiciones en este proyecto, Fer! 
+================================================================

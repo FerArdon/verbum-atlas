@@ -1,0 +1,406 @@
+// APP.JS - VERSI√ìN DEFINITIVA Y ESTABLE
+let backend = null;
+let currentMode = "catholic";
+let readData = JSON.parse(localStorage.getItem('bibleProgress')) || {};
+let notesData = JSON.parse(localStorage.getItem('bibleNotesV2')) || {};
+let freeNotes = JSON.parse(localStorage.getItem('bibleFreeNotes')) || [];
+
+const bibleData = [
+    // ANTIGUO TESTAMENTO
+    { id: "genesis", name: "G√©nesis", testament: "old", category: "Pentateuco", themeColor: "#8B5CF6", totalChapters: 50 },
+    { id: "exodo", name: "√âxodo", testament: "old", category: "Pentateuco", themeColor: "#8B5CF6", totalChapters: 40 },
+    { id: "levitico", name: "Lev√≠tico", testament: "old", category: "Pentateuco", themeColor: "#8B5CF6", totalChapters: 27 },
+    { id: "numeros", name: "N√∫meros", testament: "old", category: "Pentateuco", themeColor: "#8B5CF6", totalChapters: 36 },
+    { id: "deuteronomio", name: "Deuteronomio", testament: "old", category: "Pentateuco", themeColor: "#8B5CF6", totalChapters: 34 },
+    { id: "josue", name: "Josu√©", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 24 },
+    { id: "jueces", name: "Jueces", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 21 },
+    { id: "rut", name: "Rut", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 4 },
+    { id: "1samuel", name: "1 Samuel", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 31 },
+    { id: "2samuel", name: "2 Samuel", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 24 },
+    { id: "1reyes", name: "1 Reyes", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 22 },
+    { id: "2reyes", name: "2 Reyes", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 25 },
+    { id: "1cronicas", name: "1 Cr√≥nicas", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 29 },
+    { id: "2cronicas", name: "2 Cr√≥nicas", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 36 },
+    { id: "esdras", name: "Esdras", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 10 },
+    { id: "nehemias", name: "Nehem√≠as", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 13 },
+    { id: "tobias", name: "Tob√≠as", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 14, isDeutero: true },
+    { id: "judit", name: "Judit", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 16, isDeutero: true },
+    { id: "ester", name: "Ester", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 10 },
+    { id: "1macabeos", name: "1 Macabeos", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 16, isDeutero: true },
+    { id: "2macabeos", name: "2 Macabeos", testament: "old", category: "Historia", themeColor: "#3B82F6", totalChapters: 15, isDeutero: true },
+    { id: "job", name: "Job", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 42 },
+    { id: "salmos", name: "Salmos", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 150 },
+    { id: "proverbios", name: "Proverbios", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 31 },
+    { id: "eclesiastes", name: "Eclesiast√©s", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 12 },
+    { id: "cantar", name: "Cantar de los Cantares", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 8 },
+    { id: "sabiduria", name: "Sabidur√≠a", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 19, isDeutero: true },
+    { id: "eclesiastico", name: "Eclesi√°stico", testament: "old", category: "Sabidur√≠a", themeColor: "#10B981", totalChapters: 51, isDeutero: true },
+    { id: "isaias", name: "Isa√≠as", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 66 },
+    { id: "jeremias", name: "Jerem√≠as", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 52 },
+    { id: "lamentaciones", name: "Lamentaciones", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 5 },
+    { id: "baruc", name: "Baruc", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 6, isDeutero: true },
+    { id: "ezequiel", name: "Ezequiel", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 48 },
+    { id: "daniel", name: "Daniel", testament: "old", category: "Profetas Mayores", themeColor: "#F59E0B", totalChapters: 14 },
+    { id: "oseas", name: "Oseas", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 14 },
+    { id: "joel", name: "Joel", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 3 },
+    { id: "amos", name: "Am√≥s", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 9 },
+    { id: "abdias", name: "Abd√≠as", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 1 },
+    { id: "jonas", name: "Jon√°s", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 4 },
+    { id: "miqueas", name: "Miqueas", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 7 },
+    { id: "nahum", name: "Nah√∫m", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 3 },
+    { id: "habacuc", name: "Habacuc", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 3 },
+    { id: "sofonias", name: "Sofon√≠as", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 3 },
+    { id: "hageo", name: "Hageo", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 2 },
+    { id: "zacarias", name: "Zacar√≠as", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 14 },
+    { id: "malaquias", name: "Malaqu√≠as", testament: "old", category: "Profetas Menores", themeColor: "#EC4899", totalChapters: 4 },
+
+    // NUEVO TESTAMENTO
+    { id: "mateo", name: "Mateo", testament: "new", category: "Evangelios", themeColor: "#EF4444", totalChapters: 28 },
+    { id: "marcos", name: "Marcos", testament: "new", category: "Evangelios", themeColor: "#EF4444", totalChapters: 16 },
+    { id: "lucas", name: "Lucas", testament: "new", category: "Evangelios", themeColor: "#EF4444", totalChapters: 24 },
+    { id: "juan", name: "Juan", testament: "new", category: "Evangelios", themeColor: "#EF4444", totalChapters: 21 },
+    { id: "hechos", name: "Hechos", testament: "new", category: "Historia NT", themeColor: "#F97316", totalChapters: 28 },
+    { id: "romanos", name: "Romanos", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 16 },
+    { id: "1corintios", name: "1 Corintios", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 16 },
+    { id: "2corintios", name: "2 Corintios", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 13 },
+    { id: "galatas", name: "G√°latas", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 6 },
+    { id: "efesios", name: "Efesios", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 6 },
+    { id: "filipenses", name: "Filipenses", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 4 },
+    { id: "colosenses", name: "Colosenses", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 4 },
+    { id: "1tesalonicenses", name: "1 Tesalonicenses", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 5 },
+    { id: "2tesalonicenses", name: "2 Tesalonicenses", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 3 },
+    { id: "1timoteo", name: "1 Timoteo", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 6 },
+    { id: "2timoteo", name: "2 Timoteo", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 4 },
+    { id: "tito", name: "Tito", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 3 },
+    { id: "filemon", name: "Filem√≥n", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 1 },
+    { id: "hebreos", name: "Hebreos", testament: "new", category: "Cartas Paulinas", themeColor: "#6366F1", totalChapters: 13 },
+    { id: "santiago", name: "Santiago", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 5 },
+    { id: "1pedro", name: "1 Pedro", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 5 },
+    { id: "2pedro", name: "2 Pedro", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 3 },
+    { id: "1juan", name: "1 Juan", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 5 },
+    { id: "2juan", name: "2 Juan", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 1 },
+    { id: "3juan", name: "3 Juan", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 1 },
+    { id: "judas", name: "Judas", testament: "new", category: "Cartas Generales", themeColor: "#06B6D4", totalChapters: 1 },
+    { id: "apocalipsis", name: "Apocalipsis", testament: "new", category: "Profec√≠a NT", themeColor: "#7C3AED", totalChapters: 22 }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. REFS DOM
+    const booksGrid = document.getElementById('booksGrid');
+    const periodicTable = document.getElementById('periodicTable');
+    const searchInput = document.getElementById('searchInput');
+    const searchBookSidebar = document.getElementById('searchBook');
+    const bibleVersionSelect = document.getElementById('bibleVersion');
+    const verseViewer = document.getElementById('verseViewer');
+    const verseContent = document.getElementById('verseViewerContent');
+    const verseTitle = document.getElementById('verseViewerTitle');
+    const viewerControls = document.getElementById('viewerControls');
+    const mapContainer = document.getElementById('mapContainer');
+    const journalEntriesList = document.getElementById('journalEntriesList');
+    const notesBoard = document.getElementById('notesBoard');
+
+    const jReflexion = document.getElementById('jReflexion');
+    const jAplicacion = document.getElementById('jAplicacion');
+    const jMensaje = document.getElementById('jMensaje');
+    const journalStatus = document.getElementById('journalStatus');
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    // 2. CONFIG PUENTE PYTHON
+    if (typeof QWebChannel !== "undefined") {
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+            backend = channel.objects.backend;
+            handleVersionChange("catholic");
+        });
+    }
+
+    // 3. PERSISTENCIA Y UTILIDADES
+    function saveAll() {
+        localStorage.setItem('bibleProgress', JSON.stringify(readData));
+        localStorage.setItem('bibleNotesV2', JSON.stringify(notesData));
+        localStorage.setItem('bibleFreeNotes', JSON.stringify(freeNotes));
+    }
+
+    const normalizeText = (text) => (text || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    function getBookProgress(book) {
+        const read = (readData[book.id] || []).length;
+        return Math.round((read / (book.totalChapters || 1)) * 100);
+    }
+
+    // 4. RENDERIZADO DE LIBROS (Biblioteca)
+    function renderBooks(filter = 'all', searchTerm = '') {
+        if (!booksGrid) return;
+        booksGrid.innerHTML = '';
+
+        const s = normalizeText(searchTerm);
+
+        const filtered = bibleData.filter(book => {
+            if (currentMode === 'protestant' && book.isDeutero) return false;
+            const matchesF = filter === 'all' ? true : (filter === 'old' ? book.testament === 'old' : book.testament === 'new');
+            const matchesS = normalizeText(book.name).includes(s) || normalizeText(book.category).includes(s);
+            return matchesF && matchesS;
+        });
+
+        filtered.forEach(book => {
+            const progress = getBookProgress(book);
+            const card = document.createElement('div');
+            card.className = 'book-card';
+
+            // Imagen de portada
+            const cover = `images/covers/${book.id}.jpg`;
+            const defCover = book.testament === 'new' ? `images/covers/default_new.jpg` : `images/covers/moises.png`;
+
+            card.innerHTML = `
+                <div style="height:120px; overflow:hidden; border-radius:12px 12px 0 0; position:relative;">
+                    <img src="${cover}" onerror="this.src='${defCover}'" style="width:100%; height:100%; object-fit:cover;">
+                    <div style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.5); color:white; padding:2px 8px; border-radius:10px; font-size:0.7rem;">${book.testament === 'old' ? 'A.T.' : 'N.T.'}</div>
+                </div>
+                <div style="padding:15px; text-align:left;">
+                    <h3 style="margin:0; font-size:1.1rem; color:#1F2937;">${book.name}</h3>
+                    <p style="margin:4px 0 10px; font-size:0.8rem; color:#6B7280;">${book.category}</p>
+                    <div style="background:#E5E7EB; height:6px; border-radius:3px; overflow:hidden;">
+                        <div style="width:${progress}%; background:${book.themeColor}; height:100%;"></div>
+                    </div>
+                </div>
+            `;
+            card.onclick = () => openBookMap(book);
+            booksGrid.appendChild(card);
+        });
+    }
+
+    // 5. NAVEGACI√ìN Y VISTAS
+    function switchView(viewId) {
+        if (backend) backend.stop_speaker();
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+        const target = document.getElementById(viewId);
+        if (target) target.classList.add('active-view');
+
+        navBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.target === viewId));
+
+        if (viewId === 'dashboard') renderBooks();
+        if (viewId === 'panorama') renderPeriodicTable();
+        if (viewId === 'myJournal') renderGlobalJournal();
+        if (viewId === 'freeNotes') renderFreeNotes();
+        if (viewId === 'studyPlan') updateStudyPlanStats();
+        window.scrollTo(0, 0);
+    }
+
+    navBtns.forEach(btn => btn.onclick = () => switchView(btn.dataset.target));
+
+    function handleVersionChange(version) {
+        currentMode = version;
+        if (backend) backend.setVersion(version, () => { });
+        renderBooks();
+    }
+    if (bibleVersionSelect) bibleVersionSelect.onchange = (e) => handleVersionChange(e.target.value);
+
+    // 6. DETALLE DEL LIBRO (Mapa de Cap√≠tulos)
+    function openBookMap(book) {
+        switchView('bookDetail');
+        if (verseViewer) verseViewer.style.display = 'none';
+
+        let chaps = `<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap:10px; margin-top:20px;">`;
+        for (let i = 1; i <= (book.totalChapters || 1); i++) {
+            const isRead = (readData[book.id] || []).includes(i);
+            chaps += `
+                <button style="background:${isRead ? book.themeColor : 'white'}; color:${isRead ? 'white' : book.themeColor}; border:2px solid ${book.themeColor}; padding:12px 0; border-radius:12px; font-weight:bold; cursor:pointer;"
+                        onclick="window.loadChapter('${book.id}', ${i})">
+                    ${i}
+                </button>`;
+        }
+        chaps += `</div>`;
+
+        mapContainer.innerHTML = `
+            <div style="background:${book.themeColor}; color:white; padding:40px; border-radius:16px; text-align:center;">
+                <h1 style="font-size:3rem; margin:0;">${book.name}</h1>
+                <p style="opacity:0.9;">${book.category} ‚Ä¢ ${book.totalChapters} cap√≠tulos</p>
+            </div>
+            ${chaps}
+        `;
+    }
+
+    window.loadChapter = function (bookId, chapter) {
+        const book = bibleData.find(b => b.id === bookId);
+        if (book) loadChapterText(book, chapter);
+    };
+
+    // 7. TEXTO Y VOZ
+    let isSpeaking = false;
+    function loadChapterText(book, chapter) {
+        if (backend) backend.stop_speaker();
+        isSpeaking = false;
+
+        verseViewer.style.display = 'block';
+        verseTitle.innerText = `${book.name} ${chapter}`;
+        verseContent.innerHTML = 'Cargando manuscritos...';
+        loadJournalEntry(book.id, chapter);
+
+        if (backend) {
+            backend.getChapterText(book.name, chapter, function (res) {
+                const data = JSON.parse(res);
+                if (data.error) {
+                    verseContent.innerHTML = data.error;
+                } else {
+                    let html = ""; let tS = `Cap√≠tulo ${chapter} de ${book.name}. `;
+                    data.forEach(v => {
+                        html += `<p style="margin-bottom:12px;"><sup style="color:${book.themeColor}; font-weight:bold; margin-right:5px;">${v.verse}</sup>${v.text}</p>`;
+                        tS += v.text + " ";
+                    });
+                    verseContent.innerHTML = html;
+
+                    const isRead = (readData[book.id] || []).includes(chapter);
+                    viewerControls.innerHTML = `
+                        <button id="spkBtn" style="background:${book.themeColor}; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; margin-right:10px;">
+                            <i class="fa-solid fa-volume-high"></i> Escuchar
+                        </button>
+                        <button id="readMarkBtn" style="background:white; border:1px solid #ddd; padding:10px 20px; border-radius:8px; cursor:pointer;">
+                            ${isRead ? '‚úì Le√≠do' : 'Marcar como le√≠do'}
+                        </button>
+                    `;
+
+                    document.getElementById('spkBtn').onclick = () => {
+                        if (isSpeaking) {
+                            backend.stop_speaker();
+                            isSpeaking = false;
+                            document.getElementById('spkBtn').innerHTML = '<i class="fa-solid fa-volume-high"></i> Escuchar';
+                        } else {
+                            backend.speak(tS);
+                            isSpeaking = true;
+                            document.getElementById('spkBtn').innerHTML = '<i class="fa-solid fa-stop"></i> Detener';
+                        }
+                    };
+
+                    document.getElementById('readMarkBtn').onclick = () => {
+                        if (!readData[book.id]) readData[book.id] = [];
+                        const idx = readData[book.id].indexOf(chapter);
+                        if (idx > -1) readData[book.id].splice(idx, 1);
+                        else readData[book.id].push(chapter);
+                        saveAll();
+                        loadChapterText(book, chapter);
+                    };
+                }
+                setTimeout(() => verseViewer.scrollIntoView({ behavior: 'smooth' }), 100);
+            });
+        }
+    }
+
+    // 8. DIARIO Y APUNTES
+    function loadJournalEntry(bookId, chapter) {
+        const key = `${bookId}_${chapter}`;
+        const e = notesData[key] || { ref: "", app: "", msg: "" };
+        jReflexion.value = e.ref; jAplicacion.value = e.app; jMensaje.value = e.msg;
+        jReflexion.dataset.book = bookId; jReflexion.dataset.chapter = chapter;
+        journalStatus.innerHTML = "Sincronizado";
+    }
+
+    [jReflexion, jAplicacion, jMensaje].forEach(input => {
+        input.oninput = () => {
+            const b = jReflexion.dataset.book, c = parseInt(jReflexion.dataset.chapter);
+            if (b && c) {
+                const key = `${b}_${c}`;
+                notesData[key] = { ref: jReflexion.value, app: jAplicacion.value, msg: jMensaje.value, date: new Date().toISOString() };
+                journalStatus.innerHTML = "Guardando...";
+                clearTimeout(window.sT);
+                window.sT = setTimeout(() => { journalStatus.innerHTML = "‚úì Guardado"; saveAll(); }, 1000);
+            }
+        };
+    });
+
+    function renderGlobalJournal() {
+        if (!journalEntriesList) return;
+        journalEntriesList.innerHTML = '';
+        const entries = Object.entries(notesData).map(([k, d]) => {
+            const [bId, ch] = k.split('_');
+            return { book: bibleData.find(b => b.id === bId), chapter: ch, data: d };
+        }).filter(e => e.book && (e.data.ref || e.data.app || e.data.msg));
+
+        if (entries.length === 0) journalEntriesList.innerHTML = "<p style='color:#999;'>No hay notas a√∫n.</p>";
+        entries.forEach(e => {
+            const div = document.createElement('div');
+            div.className = "journal-card";
+            div.style.padding = "15px"; div.style.background = "white"; div.style.borderRadius = "12px"; div.style.marginBottom = "10px"; div.style.borderLeft = `5px solid ${e.book.themeColor}`; div.style.cursor = "pointer";
+            div.innerHTML = `<strong>${e.book.name} ${e.chapter}</strong><p style="font-size:0.8rem; color:#666; margin:5px 0 0;">${e.data.ref.substring(0, 50)}...</p>`;
+            div.onclick = () => { openBookMap(e.book); setTimeout(() => loadChapterText(e.book, parseInt(e.chapter)), 300); };
+            journalEntriesList.appendChild(div);
+        });
+    }
+
+    // 9. EVENTOS BUSQUEDA
+    if (searchInput) {
+        searchInput.oninput = (e) => {
+            const act = document.querySelector('.filter-btn.active');
+            renderBooks(act ? act.dataset.filter : 'all', e.target.value);
+            if (searchBookSidebar) searchBookSidebar.value = e.target.value;
+        };
+    }
+
+    if (searchBookSidebar) {
+        searchBookSidebar.oninput = (e) => {
+            const act = document.querySelector('.filter-btn.active');
+            renderBooks(act ? act.dataset.filter : 'all', e.target.value);
+            if (searchInput) searchInput.value = e.target.value;
+        };
+    }
+
+    filterBtns.forEach(btn => {
+        btn.onclick = () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderBooks(btn.dataset.filter, searchInput.value);
+        };
+    });
+
+    // 10. OTROS (PANORAMA, PROGRESO)
+    function renderPeriodicTable() {
+        if (!periodicTable) return; periodicTable.innerHTML = '';
+        const groups = {};
+        bibleData.forEach(b => {
+            if (currentMode === 'protestant' && b.isDeutero) return;
+            if (!groups[b.category]) groups[b.category] = [];
+            groups[b.category].push(b);
+        });
+        for (const [cat, books] of Object.entries(groups)) {
+            const d = document.createElement('div');
+            d.innerHTML = `<h4 style="margin-bottom:10px; border-bottom:2px solid ${books[0].themeColor}">${cat}</h4>`;
+            const g = document.createElement('div'); g.style.display = "grid"; g.style.gridTemplateColumns = "repeat(auto-fill, minmax(50px, 1fr))"; g.style.gap = "5px";
+            books.forEach(b => {
+                const el = document.createElement('div'); el.innerText = b.id.substring(0, 3).toUpperCase(); el.style.background = b.themeColor; el.style.color = "white"; el.style.padding = "10px 2px"; el.style.borderRadius = "6px"; el.style.textAlign = "center"; el.style.fontSize = "0.7rem"; el.style.cursor = "pointer";
+                el.onclick = () => openBookMap(b); g.appendChild(el);
+            });
+            d.appendChild(g); periodicTable.appendChild(d);
+        }
+    }
+
+    function updateStudyPlanStats() {
+        let t = 0, r = 0;
+        bibleData.forEach(b => { if (currentMode === 'protestant' && b.isDeutero) return; t += b.totalChapters; r += (readData[b.id] || []).length; });
+        const p = Math.round((r / t) * 100);
+        const el = document.getElementById('totalProgress');
+        if (el) { el.innerText = `${p}%`; document.getElementById('totalProgressBar').style.width = `${p}%`; }
+    }
+
+});
+ 
+  
+ / /   D a t o s   d e l   L i b r o   d e   M o r m √ ≥ n  
+ c o n s t   m o r m o n D a t a   =   [  
+         {   i d :   " 1 n e f i " ,   n a m e :   " 1   N e f i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   N e f i " ,   t h e m e C o l o r :   " # 8 B 5 C F 6 " ,   t o t a l C h a p t e r s :   2 2   } ,  
+         {   i d :   " 2 n e f i " ,   n a m e :   " 2   N e f i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   N e f i " ,   t h e m e C o l o r :   " # 8 B 5 C F 6 " ,   t o t a l C h a p t e r s :   3 3   } ,  
+         {   i d :   " j a c o b " ,   n a m e :   " J a c o b " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   J a c o b " ,   t h e m e C o l o r :   " # 3 B 8 2 F 6 " ,   t o t a l C h a p t e r s :   7   } ,  
+         {   i d :   " e n o s " ,   n a m e :   " E n √ ≥ s " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   E n √ ≥ s " ,   t h e m e C o l o r :   " # 3 B 8 2 F 6 " ,   t o t a l C h a p t e r s :   1   } ,  
+         {   i d :   " j a r o m " ,   n a m e :   " J a r o m " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   J a r o m " ,   t h e m e C o l o r :   " # 3 B 8 2 F 6 " ,   t o t a l C h a p t e r s :   1   } ,  
+         {   i d :   " o m n i " ,   n a m e :   " O m n i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   O m n i " ,   t h e m e C o l o r :   " # 3 B 8 2 F 6 " ,   t o t a l C h a p t e r s :   1   } ,  
+         {   i d :   " p a l a b r a s " ,   n a m e :   " P a l a b r a s   d e   M o r m √ ≥ n " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " P a l a b r a s   d e   M o r m √ ≥ n " ,   t h e m e C o l o r :   " # 1 0 B 9 8 1 " ,   t o t a l C h a p t e r s :   1   } ,  
+         {   i d :   " m o s i a h " ,   n a m e :   " M o s √ ≠ a h " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   M o s √ ≠ a h " ,   t h e m e C o l o r :   " # 1 0 B 9 8 1 " ,   t o t a l C h a p t e r s :   2 9   } ,  
+         {   i d :   " a l m a " ,   n a m e :   " A l m a " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   A l m a " ,   t h e m e C o l o r :   " # F 5 9 E 0 B " ,   t o t a l C h a p t e r s :   6 3   } ,  
+         {   i d :   " h e l a m a n " ,   n a m e :   " H e l a m √ ° n " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   H e l a m √ ° n " ,   t h e m e C o l o r :   " # F 5 9 E 0 B " ,   t o t a l C h a p t e r s :   1 6   } ,  
+         {   i d :   " 3 n e f i " ,   n a m e :   " 3   N e f i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   N e f i " ,   t h e m e C o l o r :   " # E C 4 8 9 9 " ,   t o t a l C h a p t e r s :   3 0   } ,  
+         {   i d :   " 4 n e f i " ,   n a m e :   " 4   N e f i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   N e f i " ,   t h e m e C o l o r :   " # E C 4 8 9 9 " ,   t o t a l C h a p t e r s :   1   } ,  
+         {   i d :   " m o r m o n " ,   n a m e :   " M o r m √ ≥ n " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   M o r m √ ≥ n " ,   t h e m e C o l o r :   " # E F 4 4 4 4 " ,   t o t a l C h a p t e r s :   9   } ,  
+         {   i d :   " e t e r " ,   n a m e :   " √ 0 t e r " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   √ 0 t e r " ,   t h e m e C o l o r :   " # 6 3 6 6 F 1 " ,   t o t a l C h a p t e r s :   1 5   } ,  
+         {   i d :   " m o r o n i " ,   n a m e :   " M o r o n i " ,   t e s t a m e n t :   " m o r m o n " ,   c a t e g o r y :   " L i b r o   d e   M o r o n i " ,   t h e m e C o l o r :   " # 0 6 B 6 D 4 " ,   t o t a l C h a p t e r s :   1 0   }  
+ ] ;  
+ 

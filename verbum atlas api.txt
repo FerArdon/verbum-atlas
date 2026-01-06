@@ -1,0 +1,15 @@
+IMPORTANTE: Esta API Key fue removida de seguridad.
+Configura tu propia API Key de Gemini en la interfaz de la aplicación.
+
+Para obtener una API Key gratuita:
+1. Ve a https://makersuite.google.com/app/apikey
+2. Haz clic en "Get API Key"
+3. Copia tu clave
+4. Abre Verbum Atlas 2026
+5. En el menú lateral, busca la opción para configurar API Key
+6. Pega tu clave y guarda
+
+NOTA IMPORTANTE DE SEGURIDAD:
+- NUNCA compartas tu API Key con otros
+- NUNCA la subas a repositorios públicos
+- Si crees que fue comprometida, regenera una nueva en Google
